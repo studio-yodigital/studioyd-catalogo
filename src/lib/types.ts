@@ -14,6 +14,8 @@ export type Product = {
   priceLabel: string | null;
   imageUrl: string | null;
   whatsappMessage: string;
+  benefits: string | null;
+  badgeLabel: string | null;
   featured: boolean;
   sortOrder: number;
   active: boolean;

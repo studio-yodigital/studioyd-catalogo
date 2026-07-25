@@ -17,6 +17,8 @@ type ProductRow = {
   price_label: string | null;
   image_url: string | null;
   whatsapp_message: string;
+  benefits: string | null;
+  badge_label: string | null;
   featured: boolean;
   sort_order: number;
   active: boolean;
@@ -41,6 +43,8 @@ function mapProduct(row: ProductRow): Product {
     priceLabel: row.price_label,
     imageUrl: row.image_url,
     whatsappMessage: row.whatsapp_message,
+    benefits: row.benefits,
+    badgeLabel: row.badge_label,
     featured: row.featured,
     sortOrder: row.sort_order,
     active: row.active,
@@ -63,7 +67,7 @@ export async function getPublicCatalog(): Promise<{
       supabase
         .from("products")
         .select(
-          "id, section_id, name, description, price_label, image_url, whatsapp_message, featured, sort_order, active",
+          "id, section_id, name, description, price_label, image_url, whatsapp_message, benefits, badge_label, featured, sort_order, active",
         )
         .eq("active", true)
         .order("sort_order", { ascending: true }),

@@ -75,3 +75,8 @@ create policy "authenticated update product images" on storage.objects
 drop policy if exists "authenticated delete product images" on storage.objects;
 create policy "authenticated delete product images" on storage.objects
   for delete using (bucket_id = 'product-images' and auth.role() = 'authenticated');
+
+-- Rediseño: beneficios (checklist) y badge libre por producto -------------
+
+alter table products add column if not exists benefits text;
+alter table products add column if not exists badge_label text;

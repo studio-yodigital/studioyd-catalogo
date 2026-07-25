@@ -3,8 +3,11 @@
 :root {
   --color-navy: #22293b;
   --color-navy-light: #2f3a52;
+  --color-navy-deep: #1a2036;
   --color-gold: #dba308;
   --color-gold-light: #f0c23d;
+  --color-cream: #f8f6f2;
+  --color-muted: #5f6675;
   --background: #faf9f6;
   --foreground: #22293b;
 }
@@ -12,8 +15,11 @@
 @theme inline {
   --color-navy: var(--color-navy);
   --color-navy-light: var(--color-navy-light);
+  --color-navy-deep: var(--color-navy-deep);
   --color-gold: var(--color-gold);
   --color-gold-light: var(--color-gold-light);
+  --color-cream: var(--color-cream);
+  --color-muted: var(--color-muted);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter);

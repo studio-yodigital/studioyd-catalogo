@@ -114,6 +114,8 @@ export async function createProduct(sectionId: string, formData: FormData) {
   const priceLabel = String(formData.get("priceLabel") ?? "").trim();
   const whatsappMessage =
     String(formData.get("whatsappMessage") ?? "").trim() || DEFAULT_WHATSAPP_TEMPLATE;
+  const benefits = String(formData.get("benefits") ?? "").trim();
+  const badgeLabel = String(formData.get("badgeLabel") ?? "").trim();
   const imageFile = formData.get("image");
 
   const supabase = await createClient();
@@ -134,6 +136,8 @@ export async function createProduct(sectionId: string, formData: FormData) {
     description,
     price_label: priceLabel || null,
     whatsapp_message: whatsappMessage,
+    benefits: benefits || null,
+    badge_label: badgeLabel || null,
     image_url: imageUrl,
     sort_order: (count ?? 0) + 1,
   });
@@ -151,6 +155,8 @@ export async function updateProduct(productId: string, sectionId: string, formDa
   const priceLabel = String(formData.get("priceLabel") ?? "").trim();
   const whatsappMessage =
     String(formData.get("whatsappMessage") ?? "").trim() || DEFAULT_WHATSAPP_TEMPLATE;
+  const benefits = String(formData.get("benefits") ?? "").trim();
+  const badgeLabel = String(formData.get("badgeLabel") ?? "").trim();
   const imageFile = formData.get("image");
 
   const supabase = await createClient();
@@ -160,6 +166,8 @@ export async function updateProduct(productId: string, sectionId: string, formDa
     description,
     price_label: priceLabel || null,
     whatsapp_message: whatsappMessage,
+    benefits: benefits || null,
+    badge_label: badgeLabel || null,
   };
 
   if (imageFile instanceof File && imageFile.size > 0) {

@@ -1,4 +1,5 @@
 import { getAllSections } from "@/lib/admin-data";
+import { ConfirmSubmitButton } from "@/components/admin/ConfirmSubmitButton";
 import {
   createSection,
   updateSectionName,
@@ -104,9 +105,12 @@ export default async function AdminDashboard() {
                   </button>
                 </form>
                 <form action={deleteSection.bind(null, section.id)}>
-                  <button type="submit" className="text-red-500">
+                  <ConfirmSubmitButton
+                    confirmMessage={`¿Eliminar la sección "${section.name}"? También se eliminan todos sus productos. Esta acción no se puede deshacer.`}
+                    className="text-red-500"
+                  >
                     Eliminar
-                  </button>
+                  </ConfirmSubmitButton>
                 </form>
               </div>
             </div>

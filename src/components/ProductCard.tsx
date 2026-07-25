@@ -1,51 +1,74 @@
 "use client";
 
 import Image from "next/image";
+import { Check } from "lucide-react";
 import type { Product } from "@/lib/types";
 import { buildInstagramMessage, buildWhatsAppLink, instagramDmLink } from "@/lib/contact";
+import { getSectionIcon } from "@/lib/section-icons";
 
-export function ProductCard({ product }: { product: Product }) {
+export function ProductCard({
+  product,
+  sectionSlug,
+}: {
+  product: Product;
+  sectionSlug: string;
+}) {
   const whatsappLink = buildWhatsAppLink(product.name, product.whatsappMessage);
   const instagramMessage = buildInstagramMessage(product.name, product.whatsappMessage);
+  const SectionIcon = getSectionIcon(sectionSlug);
+  const benefits = (product.benefits ?? "")
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
 
   return (
-    <article className="flex flex-col overflow-hidden rounded-2xl border border-navy/10 bg-white shadow-sm">
-      <div className="relative aspect-square w-full bg-gradient-to-br from-navy to-navy-light">
+    <article className="group flex flex-col overflow-hidden rounded-2xl border border-navy/10 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+      <div className="relative aspect-square w-full overflow-hidden bg-gradient-to-br from-navy to-navy-light">
         {product.imageUrl ? (
           <Image
             src={product.imageUrl}
             alt={product.name}
             fill
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            className="object-cover"
+            className="object-cover transition duration-500 group-hover:scale-105"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center">
-            <span className="font-serif text-2xl font-semibold text-gold-light/90">
-              {initials(product.name)}
-            </span>
+            <SectionIcon className="h-12 w-12 text-gold-light/80" aria-hidden="true" />
           </div>
         )}
-        {product.featured && (
+        {(product.featured || product.badgeLabel) && (
           <span className="absolute left-2 top-2 rounded-full bg-gold px-2 py-0.5 text-[11px] font-semibold text-navy shadow">
-            ⭐ Destacado
+            {product.featured ? "⭐ Destacado" : product.badgeLabel}
           </span>
         )}
       </div>
 
-      <div className="flex flex-1 flex-col gap-2 p-3">
+      <div className="flex flex-1 flex-col gap-2 p-4">
         <h3 className="font-serif text-base font-semibold text-navy">{product.name}</h3>
-        <p className="line-clamp-3 text-sm text-navy/70">{product.description}</p>
-        {product.priceLabel && (
-          <p className="text-sm font-semibold text-gold">{product.priceLabel}</p>
+        <p className="line-clamp-2 text-sm text-muted">{product.description}</p>
+
+        {benefits.length > 0 && (
+          <ul className="flex flex-col gap-1 pt-1">
+            {benefits.slice(0, 4).map((benefit) => (
+              <li key={benefit} className="flex items-start gap-1.5 text-xs text-navy/75">
+                <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-gold" aria-hidden="true" />
+                {benefit}
+              </li>
+            ))}
+          </ul>
         )}
 
-        <div className="mt-auto flex flex-col gap-2 pt-2">
+        {product.priceLabel && (
+          <p className="pt-1 text-lg font-semibold text-navy">{product.priceLabel}</p>
+        )}
+
+        <div className="mt-auto flex flex-col gap-2 pt-3">
           <a
             href={whatsappLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-1.5 rounded-full bg-[#25D366] px-3 py-2 text-sm font-semibold text-white transition hover:brightness-95"
+            className="flex items-center justify-center gap-1.5 rounded-full bg-navy px-3 py-2 text-sm font-semibold text-white transition hover:bg-navy-light"
           >
             <WhatsAppIcon />
             Cotizar por WhatsApp
@@ -65,15 +88,6 @@ export function ProductCard({ product }: { product: Product }) {
       </div>
     </article>
   );
-}
-
-function initials(name: string): string {
-  return name
-    .split(" ")
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((word) => word[0]?.toUpperCase())
-    .join("");
 }
 
 function copyToClipboard(text: string) {

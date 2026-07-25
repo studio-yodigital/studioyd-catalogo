@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getSectionById, getProductsBySection } from "@/lib/admin-data";
 import { DEFAULT_WHATSAPP_TEMPLATE } from "@/lib/contact";
+import { ConfirmSubmitButton } from "@/components/admin/ConfirmSubmitButton";
 import {
   createProduct,
   updateProduct,
@@ -52,6 +53,17 @@ export default async function SectionProductsPage({
           </Field>
           <Field label="Mensaje de WhatsApp (usa {producto} para el nombre)">
             <input name="whatsappMessage" defaultValue={DEFAULT_WHATSAPP_TEMPLATE} className={inputClass} />
+          </Field>
+          <Field label="Beneficios (uno por línea, aparecen como checklist ✔)">
+            <textarea
+              name="benefits"
+              rows={3}
+              placeholder={"Consigue más clientes sin grabarte\nListo en 24 horas\nIncluye 1 ronda de ajustes"}
+              className={inputClass}
+            />
+          </Field>
+          <Field label="Badge (opcional, texto libre — ej. Nuevo)">
+            <input name="badgeLabel" placeholder="ej. Nuevo" className={inputClass} />
           </Field>
           <Field label="Foto">
             <input name="image" type="file" accept="image/*" className="text-sm" />
@@ -137,6 +149,22 @@ export default async function SectionProductsPage({
                       className={inputClass}
                     />
                   </Field>
+                  <Field label="Beneficios (uno por línea, aparecen como checklist ✔)">
+                    <textarea
+                      name="benefits"
+                      rows={3}
+                      defaultValue={product.benefits ?? ""}
+                      className={inputClass}
+                    />
+                  </Field>
+                  <Field label="Badge (opcional, texto libre — ej. Nuevo)">
+                    <input
+                      name="badgeLabel"
+                      defaultValue={product.badgeLabel ?? ""}
+                      placeholder="ej. Nuevo"
+                      className={inputClass}
+                    />
+                  </Field>
                   <Field label="Reemplazar foto (opcional)">
                     <input name="image" type="file" accept="image/*" className="text-sm" />
                   </Field>
@@ -180,9 +208,12 @@ export default async function SectionProductsPage({
                 </form>
               </div>
               <form action={deleteProduct.bind(null, product.id, id)}>
-                <button type="submit" className="text-red-500">
+                <ConfirmSubmitButton
+                  confirmMessage={`¿Eliminar "${product.name}"? Esta acción no se puede deshacer.`}
+                  className="text-red-500"
+                >
                   Eliminar
-                </button>
+                </ConfirmSubmitButton>
               </form>
             </div>
           </li>

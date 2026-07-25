@@ -2,7 +2,7 @@ import { siteConfig } from "@/lib/site-config";
 
 export function Footer() {
   return (
-    <footer className="mt-12 bg-navy py-8 text-white/80">
+    <footer className="bg-navy-deep py-8 text-white/80">
       <div className="mx-auto flex max-w-5xl flex-col items-center gap-2 px-4 text-center text-sm">
         <p className="font-serif text-base text-white">
           <span className="text-gold-light">Yo</span>Digital
