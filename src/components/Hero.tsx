@@ -1,7 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import { Zap, Users, Clock3, Sparkles, MessageCircle, Bot } from "lucide-react";
 import { siteConfig } from "@/lib/site-config";
-import { generalWhatsAppLink, GENERAL_WHATSAPP_MESSAGE } from "@/lib/contact";
+import { generalWhatsAppLink, instagramDmLink, GENERAL_WHATSAPP_MESSAGE } from "@/lib/contact";
+import { copyToClipboard } from "@/lib/clipboard";
+import { InstagramIcon } from "@/components/icons";
 
 const HERO_BENEFITS = [
   { icon: Zap, label: "Más eficiencia" },
@@ -12,6 +16,7 @@ const HERO_BENEFITS = [
 
 export function Hero() {
   const whatsappHref = generalWhatsAppLink(GENERAL_WHATSAPP_MESSAGE);
+  const instagramHref = instagramDmLink();
 
   return (
     <section id="inicio" className="bg-navy-deep px-4 pb-16 pt-14 text-white sm:pt-20">
@@ -26,12 +31,15 @@ export function Hero() {
 
           <div className="mt-7 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start">
             <a
-              href={whatsappHref}
+              href={instagramHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full rounded-full bg-gold px-6 py-3 text-center text-sm font-semibold text-navy transition hover:brightness-95 sm:w-auto"
+              onClick={() => copyToClipboard(GENERAL_WHATSAPP_MESSAGE)}
+              className="flex w-full items-center justify-center gap-1.5 rounded-full bg-gold px-6 py-3 text-center text-sm font-semibold text-navy transition hover:brightness-95 sm:w-auto"
+              title="Se copia un mensaje sugerido — pégalo en el chat de Instagram"
             >
-              Cotizar por WhatsApp
+              <InstagramIcon className="h-4 w-4" />
+              Escríbenos por Instagram
             </a>
             <a
               href="#servicios"
@@ -41,7 +49,16 @@ export function Hero() {
             </a>
           </div>
 
-          <ul className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm text-white/70 lg:justify-start">
+          <a
+            href={whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-block text-sm text-white/60 underline underline-offset-2 transition hover:text-white/80"
+          >
+            ¿Prefieres WhatsApp? Escríbenos aquí
+          </a>
+
+          <ul className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm text-white/70 lg:justify-start">
             {HERO_BENEFITS.map(({ icon: Icon, label }) => (
               <li key={label} className="flex items-center gap-2">
                 <Icon className="h-4 w-4 text-gold-light" aria-hidden="true" />

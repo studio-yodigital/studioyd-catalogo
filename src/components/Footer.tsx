@@ -10,18 +10,18 @@ export function Footer() {
         <p>{siteConfig.description}</p>
         <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 pt-2 text-white/70">
           <a
-            href={`mailto:${siteConfig.email}`}
-            className="hover:text-gold-light"
-          >
-            {siteConfig.email}
-          </a>
-          <a
             href={`https://instagram.com/${siteConfig.instagramHandle}`}
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-gold-light"
           >
             @{siteConfig.instagramHandle}
+          </a>
+          <a
+            href={`mailto:${siteConfig.email}`}
+            className="hover:text-gold-light"
+          >
+            {siteConfig.email}
           </a>
         </div>
         <p className="pt-4 text-xs text-white/50">

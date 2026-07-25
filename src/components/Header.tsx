@@ -4,7 +4,9 @@ import { useState } from "react";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { siteConfig } from "@/lib/site-config";
-import { generalWhatsAppLink, GENERAL_WHATSAPP_MESSAGE } from "@/lib/contact";
+import { generalWhatsAppLink, instagramDmLink, GENERAL_WHATSAPP_MESSAGE } from "@/lib/contact";
+import { copyToClipboard } from "@/lib/clipboard";
+import { InstagramIcon } from "@/components/icons";
 
 const NAV_LINKS = [
   { href: "#inicio", label: "Inicio" },
@@ -17,6 +19,7 @@ const NAV_LINKS = [
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const whatsappHref = generalWhatsAppLink(GENERAL_WHATSAPP_MESSAGE);
+  const instagramHref = instagramDmLink();
 
   return (
     <header className="sticky top-0 z-50 bg-navy/95 backdrop-blur supports-[backdrop-filter]:bg-navy/90 text-white">
@@ -43,14 +46,25 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="hidden lg:block">
+        <div className="hidden items-center gap-3 lg:flex">
           <a
             href={whatsappHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full bg-gold px-4 py-2 text-sm font-semibold text-navy transition hover:brightness-95"
+            className="text-sm text-white/70 transition hover:text-white"
           >
-            Cotizar por WhatsApp
+            o por WhatsApp
+          </a>
+          <a
+            href={instagramHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => copyToClipboard(GENERAL_WHATSAPP_MESSAGE)}
+            className="flex items-center gap-1.5 rounded-full bg-gold px-4 py-2 text-sm font-semibold text-navy transition hover:brightness-95"
+            title="Se copia un mensaje sugerido — pégalo en el chat de Instagram"
+          >
+            <InstagramIcon className="h-4 w-4" />
+            Cotizar por Instagram
           </a>
         </div>
 
@@ -78,13 +92,26 @@ export function Header() {
             </a>
           ))}
           <a
+            href={instagramHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => {
+              copyToClipboard(GENERAL_WHATSAPP_MESSAGE);
+              setMenuOpen(false);
+            }}
+            className="mt-2 flex items-center justify-center gap-1.5 rounded-full bg-gold px-4 py-2 text-center text-sm font-semibold text-navy"
+          >
+            <InstagramIcon className="h-4 w-4" />
+            Cotizar por Instagram
+          </a>
+          <a
             href={whatsappHref}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setMenuOpen(false)}
-            className="mt-2 rounded-full bg-gold px-4 py-2 text-center text-sm font-semibold text-navy"
+            className="mt-1 rounded-full border border-white/20 px-4 py-2 text-center text-sm font-semibold text-white/80"
           >
-            Cotizar por WhatsApp
+            o por WhatsApp
           </a>
         </nav>
       )}

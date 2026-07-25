@@ -7,7 +7,7 @@ import { Faq } from "@/components/Faq";
 import { Testimonials } from "@/components/Testimonials";
 import { FinalCta } from "@/components/FinalCta";
 import { Footer } from "@/components/Footer";
-import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
+import { FloatingContact } from "@/components/FloatingContact";
 import { FadeIn } from "@/components/FadeIn";
 import { getPublicCatalog } from "@/lib/data";
 import { buildCatalogView } from "@/lib/catalog-view";
@@ -62,7 +62,7 @@ export default async function Home() {
         </FadeIn>
       </main>
 
-      <FloatingWhatsApp />
+      <FloatingContact />
       <Footer />
     </>
   );
